@@ -1,4 +1,4 @@
-## "DCDet: Dynamic Cross-based 3D Object Detector"
+## ["DCDet: Dynamic Cross-based 3D Object Detector"](https://arxiv.org/abs/2401.07240)
 
 Thanks for the [OpenPCDet](https://github.com/open-mmlab/OpenPCDet), this implementation of the DCDet is mainly based on the pcdet v0.6.
 
