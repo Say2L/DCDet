@@ -93,3 +93,16 @@ python tools/test.py --cfg_file ${CONFIG_FILE} --ckpt ${CKPT}
 # e.g., 
 python tools/test.py --cfg_file tools/cfgs/waymo_models/dcdet.yaml --ckpt {path}
 ```
+
+## Paper
+
+Please cite our paper if you find our work useful for your research:
+
+```
+@article{liu2024dcdet,
+  title={DCDet: Dynamic Cross-based 3D Object Detector},
+  author={Liu, Shuai and Li, Boyang and Fang, Zhiyu and Huang, Kai},
+  journal={arXiv preprint arXiv:2401.07240},
+  year={2024}
+}
+```
