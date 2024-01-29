@@ -119,10 +119,9 @@ class DynamicCrossHeadv1(nn.Module):
 
     def build_losses(self):
         self.add_module('hm_loss_func', loss_utils.FocalLossSparse())
-        #self.add_module('reg_loss_func', loss_utils.UpFormerL1Loss())
         self.add_module('reg_loss_func', loss_utils.RWIoULoss(self.voxel_size * self.feature_map_stride))
         if 'iou' in self.separate_head_cfg.HEAD_DICT:
-            self.add_module('crit_iou', loss_utils.UpFormerIoULoss())
+            self.add_module('crit_iou', loss_utils.DCDetIoULoss())
 
     @staticmethod
     def generate_spatial_indices(point_cloud_range, voxel_size, stride):
@@ -435,7 +434,7 @@ class DynamicCrossHeadv1(nn.Module):
                     final_dict['pred_scores'] = torch.pow(final_dict['pred_scores'], 1 - IOU_RECTIFIER[final_dict['pred_labels']]) * torch.pow(pred_iou, IOU_RECTIFIER[final_dict['pred_labels']])
 
                 if post_process_cfg.NMS_CONFIG.NMS_TYPE not in  ['circle_nms', 'class_specific_nms']:
-                    selected, selected_scores = model_nms_utils.class_agnostic_niv_nms(
+                    selected, selected_scores = model_nms_utils.class_agnostic_nms(
                         box_scores=final_dict['pred_scores'], box_preds=final_dict['pred_boxes'],
                         nms_config=post_process_cfg.NMS_CONFIG,
                         score_thresh=None
@@ -502,7 +501,7 @@ class DynamicCrossHeadv1(nn.Module):
         self.forward_ret_dict['pred_dicts'] = pred_dicts
         
         if not self.training or self.predict_boxes_when_training:
-            pred_dicts = self.generate_predicted_boxes_v2(
+            pred_dicts = self.generate_predicted_boxes(
                 data_dict['batch_size'], pred_dicts
             )
 

@@ -651,7 +651,7 @@ def calculate_iou_reg_loss_centerhead(batch_box_preds, mask, ind, gt_boxes):
     loss = (1.0 - iou).sum() / torch.clamp(mask.sum(), min=1e-4)
     return loss
 
-def UpFormerIoUregLoss(pred_boxes, gt_boxes, mask):
+def DCDetIoUregLoss(pred_boxes, gt_boxes, mask):
     if mask.sum() == 0:
         return 0
     
@@ -660,7 +660,7 @@ def UpFormerIoUregLoss(pred_boxes, gt_boxes, mask):
     loss = (1.0 - iou).sum() / torch.clamp(mask.sum(), min=1e-4)
     return loss
 
-class UpFormerIoULoss(nn.Module):
+class DCDetIoULoss(nn.Module):
     def __init__(self) -> None:
         super().__init__()
     
