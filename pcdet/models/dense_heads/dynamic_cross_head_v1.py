@@ -434,7 +434,7 @@ class DynamicCrossHeadv1(nn.Module):
                     final_dict['pred_scores'] = torch.pow(final_dict['pred_scores'], 1 - IOU_RECTIFIER[final_dict['pred_labels']]) * torch.pow(pred_iou, IOU_RECTIFIER[final_dict['pred_labels']])
 
                 if post_process_cfg.NMS_CONFIG.NMS_TYPE not in  ['circle_nms', 'class_specific_nms']:
-                    selected, selected_scores = model_nms_utils.class_agnostic_nms(
+                    selected, selected_scores = model_nms_utils.class_agnostic_niv_nms(
                         box_scores=final_dict['pred_scores'], box_preds=final_dict['pred_boxes'],
                         nms_config=post_process_cfg.NMS_CONFIG,
                         score_thresh=None
