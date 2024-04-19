@@ -1,6 +1,5 @@
 ## ["DCDet: Dynamic Cross-based 3D Object Detector"](https://arxiv.org/abs/2401.07240)
-
-Thanks for the [OpenPCDet](https://github.com/open-mmlab/OpenPCDet), this implementation of the DCDet is mainly based on the pcdet v0.6.
+Our paper is accepted by IJCAI2024. Thanks for the [OpenPCDet](https://github.com/open-mmlab/OpenPCDet), this implementation of the DCDet is mainly based on the pcdet v0.6.
 
 Abstract: Recently, significant progress has been made in the research of 3D object detection. However, most prior studies have focused on the utilization of center-based or anchor-based label assignment schemes. Alternative label assignment strategies remain unexplored in 3D object detection. We find that the center-based label assignment often fails to generate sufficient positive samples for training, while the anchor-based label assignment tends to encounter an imbalanced issue when handling objects of varying scales. To solve these issues, we introduce a dynamic cross label assignment (DCLA) scheme, which dynamically assigns positive samples for each object from a cross-shaped region, thus providing sufficient and balanced positive samples for training. Furthermore, to address the challenge of accurately regressing objects with varying scales, we put forth a rotation-weighted Intersection over Union (RWIoU) metric to replace the widely used L1 metric in regression loss. Extensive experiments demonstrate the generality and effectiveness of our DCLA and RWIoU-based regression loss.
 
