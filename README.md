@@ -98,10 +98,18 @@ python tools/test.py --cfg_file tools/cfgs/waymo_models/dcdet.yaml --ckpt {path}
 Please cite our paper if you find our work useful for your research:
 
 ```
-@article{liu2024dcdet,
-  title={DCDet: Dynamic Cross-based 3D Object Detector},
-  author={Liu, Shuai and Li, Boyang and Fang, Zhiyu and Huang, Kai},
-  journal={arXiv preprint arXiv:2401.07240},
-  year={2024}
+@inproceedings{ijcai2024p124,
+  title     = {DCDet: Dynamic Cross-based 3D Object Detector},
+  author    = {Liu, Shuai and Li, Boyang and Fang, Zhiyu and Huang, Kai},
+  booktitle = {Proceedings of the Thirty-Third International Joint Conference on
+               Artificial Intelligence, {IJCAI-24}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Kate Larson},
+  pages     = {1119--1127},
+  year      = {2024},
+  month     = {8},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2024/124},
+  url       = {https://doi.org/10.24963/ijcai.2024/124},
 }
 ```
