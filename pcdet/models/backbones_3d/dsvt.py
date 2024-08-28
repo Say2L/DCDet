@@ -5,7 +5,6 @@ from math import ceil
 
 from pcdet.models.model_utils.dsvt_utils import get_window_coors, get_inner_win_inds_cuda, get_pooling_index, get_continous_inds
 from pcdet.models.model_utils.dsvt_utils import PositionEmbeddingLearned
-from pcdet.models.model_utils.linear_attn import FocusedLinearAttention
 
 class DSVT(nn.Module):
     '''Dynamic Sparse Voxel Transformer Backbone.
@@ -275,59 +274,6 @@ class SetAttention(nn.Module):
         src = self.norm2(src)
 
         return src
-
-class LinearAttention(nn.Module):
-
-    def __init__(self, d_model, nhead, dropout, dim_feedforward=2048, activation="relu", batch_first=True, mlp_dropout=0):
-        super().__init__()
-        self.nhead = nhead
-        
-        self.linear_attn = FocusedLinearAttention(d_model, nhead, None)
-
-        # Implementation of Feedforward model
-        self.linear1 = nn.Linear(d_model, dim_feedforward)
-        self.dropout = nn.Dropout(mlp_dropout)
-        self.linear2 = nn.Linear(dim_feedforward, d_model)
-        self.d_model = d_model
-        self.norm1 = nn.LayerNorm(d_model)
-        self.norm2 = nn.LayerNorm(d_model)
-        self.dropout1 = nn.Identity()
-        self.dropout2 = nn.Identity()
-
-        self.activation = _get_activation_fn(activation)
-
-    def forward(self, src, pos=None, key_padding_mask=None, voxel_inds=None):
-        '''
-        Args:
-            src (Tensor[float]): Voxel features with shape (N, C), where N is the number of voxels.
-            pos (Tensor[float]): Position embedding vectors with shape (N, C).
-            key_padding_mask (Tensor[bool]): Mask for redundant voxels within set. Shape of (set_num, set_size).
-            voxel_inds (Tensor[int]): Voxel indexs for each set. Shape of (set_num, set_size).
-        Returns:
-            src (Tensor[float]): Voxel features.
-        '''
-
-        set_features = src[voxel_inds]
-
-        if pos is not None:
-            set_pos = pos[voxel_inds]
-        else:
-            set_pos = None
-
-        if key_padding_mask is not None:
-            src2 = self.linear_attn(set_features, set_pos, src, voxel_inds, key_padding_mask)[0]
-        else:
-            src2 = self.linear_attn(set_features, set_pos, src, voxel_inds)[0]
-
-        # FFN layer
-        src = src + self.dropout1(src2)
-        src = self.norm1(src)
-        src2 = self.linear2(self.dropout(self.activation(self.linear1(src))))
-        src = src + self.dropout2(src2)
-        src = self.norm2(src)
-
-        return src
-    
 
 class Stage_Reduction_Block(nn.Module):
     def __init__(self, input_channel, output_channel):
